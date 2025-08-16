@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Hub</title>
+    <style>
+        /* ---- पेज की बेसिक स्टाइलिंग ---- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f9; /* हल्का ग्रे बैकग्राउंड */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        /* ---- हेडिंग की स्टाइलिंग ---- */
+        h1 {
+            color: #2c3e50;
+            font-size: 2.8em;
+            margin-bottom: 40px;
+        }
+
+        /* ---- Subjects के बॉक्स का कंटेनर (Grid Layout) ---- */
+        .subjects-grid {
+            display: grid;
+            /* यह ग्रिड को Responsive बनाता है, हर बॉक्स कम से कम 200px का होगा */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px; /* बॉक्स के बीच में गैप */
+        }
+
+        /* ---- हर एक Subject बॉक्स की स्टाइलिंग ---- */
+        .subject-box {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            text-decoration: none; /* लिंक का अंडरलाइन हटाने के लिए */
+            color: #34495e;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-align: center;
+            
+            /* होवर इफ़ेक्ट के लिए ट्रांजीशन */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* ---- माउस ले जाने पर (Hover Effect) ---- */
+        .subject-box:hover {
+            transform: translateY(-8px); /* बॉक्स को थोड़ा ऊपर उठाने का इफ़ेक्ट */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* छाया को गहरा करने का इफ़ेक्ट */
+            color: #3498db; /* टेक्स्ट का रंग बदलना */
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h1>Study Hub</h1>
+
+        <div class="subjects-grid">
+            <a href="#" class="subject-box">English</a>
+            <a href="#" class="subject-box">हिन्दी</a>
+            <a href="#" class="subject-box">गणित</a>
+            <a href="#" class="subject-box">Science</a>
+            <a href="#" class="subject-box">Computer</a>
+            <a href="#" class="subject-box">Polity</a>
+            <a href="#" class="subject-box">राजस्थान भूगोल</a>
+            <a href="#" class="subject-box">राजस्थान इतिहास</a>
+            <a href="#" class="subject-box">राजस्थान कला एवं संस्कृति</a>
+            <a href="#" class="subject-box">Current Affairs</a>
+        </div>
+    </div>
+
+</body>
+</html>
