@@ -23,8 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toast = document.getElementById('achievement-toast');
     const confirmModal = document.getElementById('confirm-modal');
 
-    // --- CHART INSTANCE & CONSTANTS ---
-    let scoreChart;
+    // --- CONSTANTS ---
     const TOTAL_QUESTIONS = 120;
     const THEMES = { 'cosmic-dark': 'Cosmic Dark', 'royal-gold': 'Royal Gold', 'sunset-glow': 'Sunset Glow', 'deep-ocean': 'Deep Ocean', 'emerald-shine': 'Emerald Shine', 'neon-punk': 'Neon Punk', 'minimalist-light': 'Minimalist Light', 'lush-forest': 'Lush Forest', 'strawberry-cream': 'Strawberry Cream', 'cherry-blossom': 'Cherry Blossom', 'moonlit-asteroid': 'Moonlit Asteroid', 'burning-orange': 'Burning Orange', 'amethyst': 'Amethyst', 'sharp-blues': 'Sharp Blues', 'soft-mint': 'Soft Mint', 'grapefruit': 'Grapefruit', 'earth': 'Earth', 'vintage': 'Vintage', 'rose-water': 'Rose Water', 'midnight-green': 'Midnight Green' };
     
@@ -73,9 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="card summary-card"><div class="label">Average Score</div><div class="value" data-value="${averages.avgScore.toFixed(2)}">0</div></div>
                     <div class="card summary-card"><div class="label">Best Rank</div><div class="value" data-value="${averages.bestRank}">0</div></div>
                     <div class="card summary-card"><div class="label">Avg. Accuracy</div><div class="value" data-value="${averages.avgAccuracy.toFixed(2)}">0%</div></div>
-                </div>
-                <div class="card chart-container"><canvas id="scoreChart"></canvas></div>`;
-            renderCharts();
+                </div>`;
             document.querySelectorAll('.value[data-value]').forEach(animateValue);
         }, 100);
     };
@@ -110,14 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="card summary-card skeleton"><div class="skeleton-text"></div><div class="skeleton-text" style="width: 60%;"></div></div>
             <div class="card summary-card skeleton"><div class="skeleton-text"></div><div class="skeleton-text" style="width: 60%;"></div></div>
             <div class="card summary-card skeleton"><div class="skeleton-text"></div><div class="skeleton-text" style="width: 60%;"></div></div>
-        </div>
-        <div class="card chart-container skeleton skeleton-card"></div>`;
+        </div>`;
 
     const getSkeletonHistory = () => Array(3).fill('<div class="card skeleton skeleton-card" style="height: 80px;"></div>').join('');
 
     // --- ANIMATIONS & UX ---
     const animateValue = (el) => {
         const target = parseFloat(el.dataset.value);
+        if (isNaN(target)) { el.textContent = el.dataset.value; return; }
         const duration = 1000;
         let start = 0;
         const stepTime = 15;
@@ -159,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         vibrate();
-        // ... (rest of the form logic is unchanged)
         const id = document.getElementById('test-id').value;
         const correct = parseInt(document.getElementById('correct').value) || 0;
         const incorrect = parseInt(document.getElementById('incorrect').value) || 0;
@@ -206,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- INITIALIZATION ---
     const init = () => {
-        // ... (All other functions like renderCharts, calculateAverages, showForm, etc., remain the same)
         Object.keys(THEMES).forEach(key => {
             const btn = document.createElement('button');
             btn.className = 'theme-button';
@@ -217,12 +212,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         loadState();
         renderAll();
-        switchView(state.activeView);
+        switchView('dashboard-view');
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(err => console.error('SW registration failed:', err));
     };
     
-    // --- Unchanged functions from previous version ---
-    const renderCharts = () => { const chartData = state.records.slice().reverse(); const labels = chartData.map(r => new Date(r.id).toLocaleDateString()); const scores = chartData.map(r => r.score); const accuracies = chartData.map(r => r.accuracy); const percentiles = chartData.map(r => r.percentile); if (scoreChart) scoreChart.destroy(); const ctx = document.getElementById('scoreChart'); if (!ctx) return; scoreChart = new Chart(ctx, { type: 'line', data: { labels, datasets: [ { label: 'Score', data: scores, borderColor: 'var(--accent-1)', tension: 0.3, fill: true, backgroundColor: 'rgba(from var(--accent-1) r g b / 0.1)' }, { label: 'Accuracy (%)', data: accuracies, borderColor: 'var(--green)', tension: 0.3 }, { label: 'Percentile', data: percentiles, borderColor: 'var(--orange)', tension: 0.3 } ]}, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } } }); };
+    // --- Unchanged functions ---
     const calculateAverages = () => { if(state.records.length === 0) return { avgScore: 0, bestRank: 'N/A', avgAccuracy: 0}; const totalScore = state.records.reduce((sum, r) => sum + r.score, 0); const bestRank = Math.min(...state.records.map(r => r.rank)); const totalAccuracy = state.records.reduce((sum, r) => sum + r.accuracy, 0); return { avgScore: totalScore / state.records.length, bestRank, avgAccuracy: totalAccuracy / state.records.length }; };
     const getFilteredAndSortedRecords = () => { let records = [...state.records]; if (state.filteredTestType !== 'all') records = records.filter(r => r.testType === state.filteredTestType); switch (state.sortBy) { case 'score': records.sort((a, b) => b.score - a.score); break; case 'rank': records.sort((a, b) => a.rank - b.rank); break; } return records; };
     const showForm = (record = null) => { testForm.reset(); if (record) { formTitle.textContent = 'Edit Record'; Object.keys(record).forEach(key => { const input = document.getElementById(key); if(input) input.value = record[key]; }); } else { formTitle.textContent = 'Add New Record'; document.getElementById('test-id').value = ''; } formModal.classList.add('active'); };

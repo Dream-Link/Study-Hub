@@ -1,10 +1,9 @@
-const CACHE_NAME = 'vip-tracker-cache-v1';
+const CACHE_NAME = 'vip-tracker-cache-v2'; // Cache version updated
 const urlsToCache = [
   '/',
   '/index.html',
   '/style.css',
   '/script.js',
-  'https://cdn.jsdelivr.net/npm/chart.js',
   'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap'
 ];
 
@@ -29,5 +28,21 @@ self.addEventListener('fetch', event => {
         return fetch(event.request);
       }
     )
+  );
+});
+
+// Clean up old caches
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
