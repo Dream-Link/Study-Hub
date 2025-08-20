@@ -58,21 +58,9 @@
             <h3 id="form-title" class="section-title">Add New Record</h3>
             <form id="test-form">
                 <input type="hidden" id="test-id">
-                <div class="form-grid">
-                    <div class="form-group"><label for="testName">Test Name</label><input type="text" id="testName" required></div>
-                    <div class="form-group"><label for="testType">Test Type</label><select id="testType"><option value="flt">Full Length</option><option value="sectional">Sectional</option><option value="topic">Topic-wise</option></select></div>
-                    <div class="form-group"><label for="score">Score</label><input type="number" step="any" id="score" required></div>
-                    <div class="form-group"><label for="totalScore">Total Score</label><input type="number" step="any" id="totalScore" required></div>
-                    <div class="form-group"><label for="rank">Rank</label><input type="number" id="rank" required></div>
-                    <div class="form-group"><label for="totalStudents">Total Students</label><input type="number" id="totalStudents" required></div>
-                    <div class="form-group"><label for="percentile">Percentile (%)</label><input type="number" step="any" id="percentile" required></div>
-                    <div class="form-group"><label for="accuracy">Accuracy (%)</label><input type="number" step="any" id="accuracy" required></div>
-                </div>
+                <div class="form-grid"><div class="form-group"><label for="testName">Test Name</label><input type="text" id="testName" required></div><div class="form-group"><label for="testType">Test Type</label><select id="testType"><option value="flt">Full Length</option><option value="sectional">Sectional</option><option value="topic">Topic-wise</option></select></div><div class="form-group"><label for="score">Score</label><input type="number" step="any" id="score" required></div><div class="form-group"><label for="totalScore">Total Score</label><input type="number" step="any" id="totalScore" required></div><div class="form-group"><label for="rank">Rank</label><input type="number" id="rank" required></div><div class="form-group"><label for="totalStudents">Total Students</label><input type="number" id="totalStudents" required></div><div class="form-group"><label for="percentile">Percentile (%)</label><input type="number" step="any" id="percentile" required></div><div class="form-group"><label for="accuracy">Accuracy (%)</label><input type="number" step="any" id="accuracy" required></div></div>
                 <h4 class="section-title subject-title">Question Analysis (Total 120 Questions)</h4>
-                <div class="form-grid">
-                    <div class="form-group"><label for="correct">Correct</label><input type="number" id="correct" required></div>
-                    <div class="form-group"><label for="incorrect">Incorrect</label><input type="number" id="incorrect" required></div>
-                </div>
+                <div class="form-grid"><div class="form-group"><label for="correct">Correct</label><input type="number" id="correct" required></div><div class="form-group"><label for="incorrect">Incorrect</label><input type="number" id="incorrect" required></div></div>
                 <div class="form-actions"><button type="button" class="btn-cancel">Cancel</button><button type="submit" class="btn-save">Save</button></div>
             </form>
         </div>
@@ -83,13 +71,14 @@
     </div>
     
     <div id="confirm-modal" class="modal">
-        <div class="modal-content card" style="max-width: 400px;">
-            <h3 id="confirm-title" class="section-title">Are you sure?</h3>
-            <p id="confirm-message" style="text-align: center; margin-bottom: 20px;"></p>
-            <div class="form-actions">
-                <button type="button" class="btn-cancel" id="confirm-cancel-btn">Cancel</button>
-                <button type="button" class="btn-save" id="confirm-ok-btn">OK</button>
-            </div>
+        <div class="modal-content card" style="max-width: 400px;"><h3 id="confirm-title" class="section-title">Are you sure?</h3><p id="confirm-message" style="text-align: center; margin-bottom: 20px;"></p><div class="form-actions"><button type="button" class="btn-cancel" id="confirm-cancel-btn">Cancel</button><button type="button" class="btn-save" id="confirm-ok-btn">OK</button></div></div>
+    </div>
+    
+    <div id="details-modal" class="modal">
+        <div class="modal-content card">
+            <h3 id="details-title" class="section-title">Test Details</h3>
+            <div id="details-content" class="details-grid"></div>
+            <div class="form-actions" style="justify-content: center;"><button type="button" class="btn-cancel" id="details-close-btn">Close</button></div>
         </div>
     </div>
 
