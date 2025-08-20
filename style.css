@@ -49,7 +49,28 @@ button:hover, .import-btn-label:hover { background-color: var(--accent-1); color
 .header-actions { display: flex; gap: 10px; align-items: center; }
 .nav-btn { border: none; background-color: transparent; padding: 10px 15px; border-radius: 20px; }
 .nav-btn.active { background-color: var(--accent-1); color: #fff; box-shadow: 0 0 15px var(--accent-1); }
-.fab { position: fixed; bottom: 80px; right: 20px; width: 60px; height: 60px; background-image: linear-gradient(45deg, var(--accent-1), var(--accent-2)); color: #fff; border: none; border-radius: 50%; font-size: 36px; line-height: 60px; text-align: center; box-shadow: 0 5px 20px var(--accent-1); cursor: pointer; z-index: 99; transition: var(--transition-main); }
+.fab {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-image: linear-gradient(45deg, var(--accent-1), var(--accent-2));
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    /* --- ये नई लाइनें हैं --- */
+    display: flex;
+    justify-content: center; /* हॉरिजॉन्टल सेंटर */
+    align-items: center;    /* वर्टिकल सेंटर */
+    /* -------------------- */
+    box-shadow: 0 5px 20px var(--accent-1);
+    cursor: pointer;
+    z-index: 99;
+    transition: var(--transition-main);
+    padding-bottom: 4px; /* कुछ फॉन्ट्स के लिए फाइन-ट्यूनिंग */
+}
 .fab:hover { transform: scale(1.1) rotate(90deg); }
 
 /* Dashboard */
@@ -114,4 +135,5 @@ button:hover, .import-btn-label:hover { background-color: var(--accent-1); color
     #dashboard-view { grid-template-columns: 1fr 1fr; }
     .chart-container { grid-column: 1 / -1; }
     .toast.show { bottom: 30px; }
+
 }
