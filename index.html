@@ -3,356 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Test Performance Tracker</title>
+    <title>VIP Performance Tracker</title>
+    <meta name="theme-color" content="#100f25"/>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --shadow-strong: 0 10px 25px rgba(0, 0, 0, 0.3);
-            --shadow-light: 0 4px 12px rgba(0,0,0,0.15);
-            --border-radius: 18px;
-            --transition-main: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --transition-fast: all 0.2s ease-in-out;
-        }
-
-        /* THEMES */
-        /* Default: Cosmic Dark */
-        body, body.theme-cosmic-dark { --bg-image: linear-gradient(135deg, #100f25 0%, #000 100%); --card-bg: rgba(22, 22, 44, 0.7); --primary-text: #f0f0f0; --secondary-text: #a0a0c0; --accent-1: #9f5afd; --accent-2: #ff4b76; --green: #00f5a0; --red: #ff5e5e; --orange: #ffc84a; --border-color: rgba(159, 90, 253, 0.2); }
-        body.theme-royal-gold { --bg-image: linear-gradient(to right, #141e30, #243b55); --card-bg: rgba(10, 20, 30, 0.6); --primary-text: #e0e0e0; --secondary-text: #b0b0b0; --accent-1: #ffd700; --accent-2: #fbb034; --green: #9acd32; --red: #e74c3c; --orange: #f39c12; --border-color: rgba(255, 215, 0, 0.3); }
-        body.theme-sunset-glow { --bg-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); --card-bg: rgba(255, 255, 255, 0.2); --primary-text: #3f2727; --secondary-text: #7c4c4c; --accent-1: #ff6a00; --accent-2: #ee0979; --green: #1a936f; --red: #c0392b; --orange: #d35400; --border-color: rgba(255, 255, 255, 0.4); }
-        body.theme-deep-ocean { --bg-image: linear-gradient(to top, #09203f 0%, #537895 100%); --card-bg: rgba(10, 30, 60, 0.5); --primary-text: #e0fbfc; --secondary-text: #98c1d9; --accent-1: #3d5a80; --accent-2: #98c1d9; --green: #2a9d8f; --red: #e76f51; --orange: #f4a261; --border-color: rgba(152, 193, 217, 0.3); }
-        body.theme-emerald-shine { --bg-image: linear-gradient(to right, #009245, #FCEE21); --card-bg: rgba(0, 50, 20, 0.3); --primary-text: #fafff2; --secondary-text: #d4f0d6; --accent-1: #FCEE21; --accent-2: #00d465; --green: #adff2f; --red: #ff4500; --orange: #ffa500; --border-color: rgba(252, 238, 33, 0.4); }
-        body.theme-neon-punk { --bg-image: linear-gradient(to bottom, #000, #22002f); --card-bg: rgba(10, 0, 20, 0.6); --primary-text: #fff; --secondary-text: #ccc; --accent-1: #f0f; --accent-2: #0ff; --green: #0f0; --red: #f00; --orange: #ff0; --border-color: rgba(255, 0, 255, 0.4); }
-        body.theme-minimalist-light { --bg-image: linear-gradient(to bottom, #eef2f3, #ffffff); --card-bg: rgba(255, 255, 255, 0.7); --primary-text: #2c3e50; --secondary-text: #7f8c8d; --accent-1: #3498db; --accent-2: #9b59b6; --green: #27ae60; --red: #c0392b; --orange: #f39c12; --border-color: rgba(0,0,0,0.1); }
-        body.theme-lush-forest { --bg-image: linear-gradient(135deg, #2A3F54, #1E2B22); --card-bg: rgba(20, 40, 30, 0.6); --primary-text: #E8F5E9; --secondary-text: #A5D6A7; --accent-1: #66BB6A; --accent-2: #A1887F; --green: #81C784; --red: #EF9A9A; --orange: #FFCC80; --border-color: rgba(102, 187, 106, 0.3); }
-        body.theme-strawberry-cream { --bg-image: linear-gradient(120deg, #f8cdda 0%, #1d2b64 100%); --card-bg: rgba(255, 255, 255, 0.15); --primary-text: #fff; --secondary-text: #f0d9e7; --accent-1: #ff85a2; --accent-2: #ffc4d4; --green: #aaffc3; --red: #ff85a2; --orange: #ffd6a5; --border-color: rgba(255, 255, 255, 0.2); }
-        body.theme-cherry-blossom { --bg-image: linear-gradient(to top, #ffc0cb, #ffc3a0); --card-bg: rgba(255, 255, 255, 0.3); --primary-text: #593d3b; --secondary-text: #8c6b69; --accent-1: #ff758c; --accent-2: #ffb3c1; --green: #4caf50; --red: #d94a64; --orange: #ff8a65; --border-color: rgba(255, 255, 255, 0.4); }
-        /* Add 10 more quick themes */
-        body.theme-moonlit-asteroid { --bg-image: linear-gradient(to right, #0F2027, #203A43, #2C5364); --card-bg: rgba(0,0,0,0.2); --primary-text: #ddd; --secondary-text: #aaa; --accent-1: #757F9A; --accent-2: #D7DDE8; --green: #81C784; --red: #e57373; --orange: #FFB74D; --border-color: rgba(255,255,255,0.1); }
-        body.theme-burning-orange { --bg-image: linear-gradient(45deg, #FF4E50, #F9D423); --card-bg: rgba(255,255,255,0.2); --primary-text: #4C1D06; --secondary-text: #6A3A1F; --accent-1: #d32f2f; --accent-2: #FF6F00; --green: #388e3c; --red: #d32f2f; --orange: #f57c00; --border-color: rgba(255,255,255,0.3); }
-        body.theme-amethyst { --bg-image: linear-gradient(to right, #9d50bb, #6e48aa); --card-bg: rgba(0,0,0,0.2); --primary-text: #f3e5f5; --secondary-text: #ce93d8; --accent-1: #d1c4e9; --accent-2: #ab47bc; --green: #a5d6a7; --red: #ef9a9a; --orange: #ffcc80; --border-color: rgba(255,255,255,0.2); }
-        body.theme-sharp-blues { --bg-image: linear-gradient(to right, #00c6ff, #0072ff); --card-bg: rgba(255,255,255,0.15); --primary-text: #fff; --secondary-text: #e0f7fa; --accent-1: #80d8ff; --accent-2: #40c4ff; --green: #b9f6ca; --red: #ff8a80; --orange: #ffd180; --border-color: rgba(255,255,255,0.3); }
-        body.theme-soft-mint { --bg-image: linear-gradient(to right, #b2fefa, #0ed2f7); --card-bg: rgba(255,255,255,0.3); --primary-text: #004d40; --secondary-text: #00796b; --accent-1: #00bfa5; --accent-2: #1de9b6; --green: #00c853; --red: #dd2c00; --orange: #ff9100; --border-color: rgba(255,255,255,0.4); }
-        body.theme-grapefruit { --bg-image: linear-gradient(120deg, #f3e7e9 0%, #e3eeff 100%); --card-bg: rgba(255,255,255,0.5); --primary-text: #343a40; --secondary-text: #6c757d; --accent-1: #fa709a; --accent-2: #fec0c7; --green: #52b788; --red: #ef476f; --orange: #f79d65; --border-color: rgba(0,0,0,0.1); }
-        body.theme-earth { --bg-image: linear-gradient(to top, #4a453b, #7b715e); --card-bg: rgba(0,0,0,0.15); --primary-text: #f5f5f5; --secondary-text: #d7ccc8; --accent-1: #a1887f; --accent-2: #8d6e63; --green: #aed581; --red: #ffab91; --orange: #ffb74d; --border-color: rgba(255,255,255,0.1); }
-        body.theme-vintage { --bg-image: linear-gradient(to right, #d7d2cc, #304352); --card-bg: rgba(255,255,255,0.1); --primary-text: #fff; --secondary-text: #e0e0e0; --accent-1: #bcaaa4; --accent-2: #a1887f; --green: #a5d6a7; --red: #ef9a9a; --orange: #ffcc80; --border-color: rgba(255,255,255,0.1); }
-        body.theme-rose-water { --bg-image: linear-gradient(to top, #e55d87, #5fc3e4); --card-bg: rgba(255,255,255,0.2); --primary-text: #262c47; --secondary-text: #535c8c; --accent-1: #ff588a; --accent-2: #52a6c5; --green: #59cd90; --red: #e55d87; --orange: #f4a261; --border-color: rgba(255,255,255,0.3); }
-        body.theme-midnight-green { --bg-image: linear-gradient(to right, #00416A, #799F0C, #FFE000); --card-bg: rgba(0,0,0,0.2); --primary-text: #f1f2b5; --secondary-text: #e0e3a4; --accent-1: #d8de43; --accent-2: #a7be1c; --green: #bfff00; --red: #ff4848; --orange: #ffb400; --border-color: rgba(255,255,255,0.2); }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-image: var(--bg-image);
-            background-attachment: fixed;
-            color: var(--primary-text);
-            transition: var(--transition-fast);
-        }
-
-        .app-container { max-width: 420px; margin: 0 auto; padding: 15px; padding-top: 80px; padding-bottom: 90px; }
-        .app-header {
-            position: fixed; top: 0; left: 0; right: 0; max-width: 420px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center; padding: 15px;
-            background-color: rgba(from var(--card-bg) r g b / 0.7);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            z-index: 100;
-        }
-        .app-title { font-size: 20px; font-weight: 600; text-shadow: 0 0 10px var(--accent-1); }
-        .header-actions button {
-            background: none; border: 1px solid var(--border-color); color: var(--primary-text);
-            padding: 6px 12px; border-radius: 20px; cursor: pointer; margin-left: 10px; font-size: 14px;
-            transition: var(--transition-fast);
-        }
-        .header-actions button:hover { background-color: var(--accent-1); color: var(--bg-color); border-color: var(--accent-1); }
-        
-        .view { display: none; animation: fadeIn 0.5s ease-in-out; }
-        .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .card {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            border-radius: var(--border-radius); padding: 20px; margin-bottom: 25px;
-            box-shadow: var(--shadow-strong); border: 1px solid var(--border-color);
-            transition: var(--transition-main);
-            transform-style: preserve-3d;
-        }
-        .card:hover { transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1.05); }
-
-        .header-card { text-align: center; padding: 10px; }
-        .header-card .trophy { font-size: 52px; color: var(--accent-1); text-shadow: 0 0 20px var(--accent-1); animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .header-card h1 { margin: 10px 0 5px; font-weight: 700; background: linear-gradient(45deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .header-card h1 span { font-size: 40px; }
-        .header-card p { margin: 0; color: var(--secondary-text); font-size: 14px; }
-        .total-students { margin-top: 15px; font-size: 12px; color: var(--secondary-text); background-color: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 20px; display: inline-block; }
-
-        .section-title { text-align: center; font-weight: 600; color: var(--secondary-text); margin-bottom: 20px; font-size: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .quick-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; text-align: center; }
-        .summary-item { background-color: rgba(0,0,0,0.1); padding: 15px; border-radius: 12px; transition: var(--transition-fast); }
-        .summary-item:hover { background-color: rgba(0,0,0,0.2); transform: translateY(-3px); }
-        .summary-item .icon { color: var(--accent-1); margin-bottom: 8px; width: 32px; height: 32px; }
-        .summary-item .value { font-size: 20px; font-weight: 700; }
-        .summary-item .label { font-size: 12px; color: var(--secondary-text); }
-
-        .question-summary { display: flex; justify-content: space-around; text-align: center; padding: 10px 0; }
-        .question-item .value { font-size: 32px; font-weight: 700; line-height: 1.1; }
-        .question-item .label { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 5px; justify-content: center; }
-        .question-item .icon { width: 18px; height: 18px; }
-        .question-item.correct .value { color: var(--green); }
-        .question-item.incorrect .value { color: var(--red); }
-        .question-item.unattempted .value { color: var(--orange); }
-
-        .no-data { text-align: center; padding: 50px 20px; color: var(--secondary-text); background: var(--card-bg); border-radius: var(--border-radius); }
-        
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--secondary-text); }
-        .form-group input { width: 100%; padding: 14px; background: rgba(0,0,0,0.15); border: 1px solid var(--border-color); color: var(--primary-text); border-radius: 10px; font-size: 16px; font-family: 'Poppins'; transition: var(--transition-fast); }
-        .form-group input:focus { border-color: var(--accent-1); box-shadow: 0 0 10px var(--accent-1); outline: none; }
-        .form-actions { display: flex; gap: 10px; margin-top: 20px; }
-        .form-actions button { flex-grow: 1; padding: 15px; border: none; border-radius: var(--border-radius); font-size: 16px; font-weight: 600; cursor: pointer; transition: var(--transition-fast); }
-        .form-actions .btn-save { background-image: linear-gradient(45deg, var(--green), var(--accent-1)); color: #fff; }
-        .form-actions .btn-cancel { background-image: linear-gradient(45deg, var(--red), var(--orange)); color: #fff; }
-        .form-actions button:hover { transform: translateY(-3px); box-shadow: var(--shadow-light); }
-
-        .history-list .card { padding: 15px; cursor: pointer; }
-        .history-item-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
-        .history-item-date { font-size: 12px; color: var(--secondary-text); }
-        .history-item-score { font-size: 18px; color: var(--accent-1); }
-        .history-item-details { display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px; color: var(--secondary-text); }
-
-        .fab {
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-            background-image: linear-gradient(45deg, var(--accent-1), var(--accent-2));
-            color: #fff; border: none; border-radius: 50%; font-size: 36px;
-            line-height: 60px; text-align: center; box-shadow: 0 5px 20px var(--accent-1);
-            cursor: pointer; z-index: 99; transition: var(--transition-main);
-        }
-        .fab:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 8px 25px var(--accent-1); }
-        
-        .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 200;
-        }
-        .modal.active { display: flex; animation: fadeIn 0.3s; }
-        .modal-content {
-            background-color: var(--card-bg); backdrop-filter: blur(10px);
-            padding: 20px; border-radius: var(--border-radius); width: 90%; max-width: 380px;
-            border: 1px solid var(--border-color);
-        }
-        .theme-options {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 10px; margin-top: 15px; max-height: 50vh; overflow-y: auto;
-        }
-        .theme-button {
-            width: 100%; height: 50px; border: 2px solid var(--border-color);
-            border-radius: 10px; cursor: pointer; transition: var(--transition-fast);
-        }
-        .theme-button:hover { transform: scale(1.1); border-color: var(--primary-text); }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <header class="app-header">
-        <div class="app-title">Tracker</div>
-        <div class="header-actions">
-            <button id="theme-btn">Themes</button>
-            <button id="history-btn">History</button>
-        </div>
-    </header>
+    <aside class="sidebar">
+        <div class="app-title">VIP Tracker</div>
+        <nav class="sidebar-nav">
+            <button data-view="dashboard-view" class="nav-btn active">📊 Dashboard</button>
+            <button data-view="history-view" class="nav-btn">📜 History</button>
+            <button id="add-btn-sidebar" class="nav-btn">➕ Add New Record</button>
+        </nav>
+    </aside>
 
-    <div class="app-container">
-        <div id="home-view" class="view active"></div>
-        <div id="add-entry-view" class="view">
-            <div class="card">
-                <h3 class="section-title">Add New Test Record</h3>
-                <form id="test-form">
-                    <div class="form-group"><label for="testName">Test Name</label><input type="text" id="testName" placeholder="e.g., Full Length Test 1" required></div>
-                    <div class="form-group"><label for="score">Score / Total Score</label><div style="display: flex; gap: 10px;"><input type="number" step="any" id="score" placeholder="141.21" required><input type="number" step="any" id="totalScore" placeholder="200.04" required></div></div>
-                    <div class="form-group"><label for="rank">Rank / Total Students</label><div style="display: flex; gap: 10px;"><input type="number" id="rank" placeholder="446" required><input type="number" id="totalStudents" placeholder="16673" required></div></div>
-                    <div class="form-group"><label for="percentile">Percentile (%)</label><input type="number" step="any" id="percentile" placeholder="97.00" required></div>
-                    <div class="form-group"><label for="accuracy">Accuracy (%)</label><input type="number" step="any" id="accuracy" placeholder="74.17" required></div>
-                    <div class="form-group"><label for="correct">Correct / Incorrect Questions (out of 120)</label><div style="display: flex; gap: 10px;"><input type="number" id="correct" placeholder="89" required><input type="number" id="incorrect" placeholder="13" required></div></div>
-                    <div class="form-actions"><button type="button" class="btn-cancel" id="cancel-btn">Cancel</button><button type="submit" class="btn-save">Save Record</button></div>
-                </form>
+    <div class="main-content-wrapper">
+        <header class="app-header">
+            <div class="app-title-mobile">VIP Tracker</div>
+            <div class="header-actions">
+                <button id="theme-btn" title="Change Theme">🎨</button>
+                <button id="export-btn" title="Export Data">📤</button>
+                <label for="import-file" class="import-btn-label" title="Import Data">
+                    📥 <input type="file" id="import-file" accept=".json">
+                </label>
             </div>
-        </div>
-        <div id="history-view" class="view">
-             <h3 class="section-title">Test History</h3><div class="history-list" id="history-list"></div>
-        </div>
-    </div>
-    
-    <button id="add-btn" class="fab">+</button>
-    
-    <div id="theme-modal" class="modal">
-        <div class="modal-content">
-            <h3 class="section-title">Choose a VIP Theme</h3>
-            <div class="theme-options" id="theme-options-grid">
+        </header>
+
+        <main class="app-container">
+            <section id="dashboard-view" class="view active"></section>
+            <section id="history-view" class="view">
+                <div class="history-controls card">
+                    <select id="filter-test-type"><option value="all">All Test Types</option><option value="flt">Full Length</option><option value="sectional">Sectional</option><option value="topic">Topic-wise</option></select>
+                    <select id="sort-history"><option value="newest">Sort by: Newest</option><option value="score">Score (High-Low)</option><option value="rank">Rank (Low-High)</option></select>
                 </div>
+                <div id="history-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <nav class="bottom-nav">
+        <button data-view="dashboard-view" class="nav-btn active">📊 Dashboard</button>
+        <button data-view="history-view" class="nav-btn">📜 History</button>
+    </nav>
+
+    <button id="add-btn-mobile" class="fab">+</button>
+    
+    <div id="form-modal" class="modal">
+        <div class="modal-content card">
+            <h3 id="form-title" class="section-title">Add New Record</h3>
+            <form id="test-form">
+                <input type="hidden" id="test-id">
+                <div class="form-grid">
+                    <div class="form-group"><label for="testName">Test Name</label><input type="text" id="testName" required></div>
+                    <div class="form-group"><label for="testType">Test Type</label><select id="testType"><option value="flt">Full Length</option><option value="sectional">Sectional</option><option value="topic">Topic-wise</option></select></div>
+                    <div class="form-group"><label for="score">Score</label><input type="number" step="any" id="score" required></div>
+                    <div class="form-group"><label for="totalScore">Total Score</label><input type="number" step="any" id="totalScore" required></div>
+                    <div class="form-group"><label for="rank">Rank</label><input type="number" id="rank" required></div>
+                    <div class="form-group"><label for="totalStudents">Total Students</label><input type="number" id="totalStudents" required></div>
+                    <div class="form-group"><label for="percentile">Percentile (%)</label><input type="number" step="any" id="percentile" required></div>
+                    <div class="form-group"><label for="accuracy">Accuracy (%)</label><input type="number" step="any" id="accuracy" required></div>
+                </div>
+                <h4 class="section-title subject-title">Question Analysis (Total 120 Questions)</h4>
+                <div class="form-grid">
+                    <div class="form-group"><label for="correct">Correct</label><input type="number" id="correct" required></div>
+                    <div class="form-group"><label for="incorrect">Incorrect</label><input type="number" id="incorrect" required></div>
+                </div>
+                <div class="form-actions"><button type="button" class="btn-cancel">Cancel</button><button type="submit" class="btn-save">Save</button></div>
+            </form>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- ELEMENT SELECTORS ---
-            const views = document.querySelectorAll('.view');
-            const homeView = document.getElementById('home-view');
-            const historyList = document.getElementById('history-list');
-            const testForm = document.getElementById('test-form');
-            const themeOptionsGrid = document.getElementById('theme-options-grid');
-            
-            // Buttons
-            const addBtn = document.getElementById('add-btn');
-            const historyBtn = document.getElementById('history-btn');
-            const themeBtn = document.getElementById('theme-btn');
-            const cancelBtn = document.getElementById('cancel-btn');
-            const themeModal = document.getElementById('theme-modal');
+    <div id="theme-modal" class="modal">
+        <div class="modal-content card"><h3 class="section-title">Choose a VIP Theme</h3><div class="theme-options" id="theme-options-grid"></div></div>
+    </div>
 
-            // --- STATE & CONSTANTS ---
-            let testRecords = [];
-            const TOTAL_QUESTIONS = 120;
-            const THEMES = {
-                'cosmic-dark': 'Cosmic Dark', 'royal-gold': 'Royal Gold', 'sunset-glow': 'Sunset Glow',
-                'deep-ocean': 'Deep Ocean', 'emerald-shine': 'Emerald Shine', 'neon-punk': 'Neon Punk',
-                'minimalist-light': 'Minimalist Light', 'lush-forest': 'Lush Forest', 'strawberry-cream': 'Strawberry Cream',
-                'cherry-blossom': 'Cherry Blossom', 'moonlit-asteroid': 'Moonlit Asteroid', 'burning-orange': 'Burning Orange',
-                'amethyst': 'Amethyst', 'sharp-blues': 'Sharp Blues', 'soft-mint': 'Soft Mint',
-                'grapefruit': 'Grapefruit', 'earth': 'Earth', 'vintage': 'Vintage',
-                'rose-water': 'Rose Water', 'midnight-green': 'Midnight Green'
-            };
+    <div id="achievement-toast" class="toast"></div>
 
-            // SVG Icons
-            const ICONS = {
-                rank: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.18 8.44L2 9.5l5.5 5.07L6.35 22L12 18.27L17.65 22L16.5 14.57L22 9.5l-7.18-.06z"></path></svg>`,
-                percentile: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>`,
-                accuracy: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm-1.06 14.47l-3.54-3.54 1.42-1.41 2.12 2.12 4.6-4.6 1.41 1.42-6.01 6.01z"></path></svg>`,
-                attempted: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.26 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"></path></svg>`,
-                correct: `<svg class="icon" fill="var(--green)" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg>`,
-                incorrect: `<svg class="icon" fill="var(--red)" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>`,
-                skipped: `<svg class="icon" fill="var(--orange)" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"></path></svg>`
-            };
-            
-            // --- DATA & THEME MANAGEMENT ---
-            const loadRecords = () => testRecords = JSON.parse(localStorage.getItem('testRecords')) || [];
-            const saveRecords = () => localStorage.setItem('testRecords', JSON.stringify(testRecords));
-            const applyTheme = (theme) => { document.body.className = `theme-${theme}`; localStorage.setItem('appTheme', theme); };
-
-            // --- VIEW MANAGEMENT ---
-            const switchView = (viewId) => {
-                views.forEach(v => v.classList.remove('active'));
-                document.getElementById(viewId).classList.add('active');
-                historyBtn.textContent = viewId === 'history-view' ? 'Home' : 'History';
-            };
-
-            // --- RENDERING ---
-            const renderHomePage = () => {
-                if (testRecords.length === 0) {
-                    homeView.innerHTML = `<div class="no-data"><h2>No records found!</h2><p>Click the '+' button to add your first test record.</p></div>`; return;
-                }
-                const test = testRecords[0];
-                homeView.innerHTML = `
-                    <div class="card header-card">
-                        <div class="trophy">🏆</div> <p>${test.testName}</p>
-                        <h1><span>${test.score}</span> / ${test.totalScore}</h1>
-                        <p>Performance on ${new Date(test.id).toLocaleDateString()}</p>
-                        <div class="total-students">Total Students: ${test.totalStudents}</div>
-                    </div>
-                    <div class="card"><h3 class="section-title">Quick Summary</h3><div class="quick-summary-grid">
-                        <div class="summary-item">${ICONS.rank}<div class="value">${test.rank}</div><div class="label">Rank</div></div>
-                        <div class="summary-item">${ICONS.percentile}<div class="value">${test.percentile}%</div><div class="label">Percentile</div></div>
-                        <div class="summary-item">${ICONS.accuracy}<div class="value">${test.accuracy}%</div><div class="label">Accuracy</div></div>
-                        <div class="summary-item">${ICONS.attempted}<div class="value">${test.attempted}/${TOTAL_QUESTIONS}</div><div class="label">Attempted</div></div>
-                    </div></div>
-                    <div class="card"><h3 class="section-title">Question Summary</h3><div class="question-summary">
-                        <div class="question-item correct"><div class="value">${test.correct}</div><div class="label">${ICONS.correct} Correct</div></div>
-                        <div class="question-item incorrect"><div class="value">${test.incorrect}</div><div class="label">${ICONS.incorrect} Incorrect</div></div>
-                        <div class="question-item unattempted"><div class="value">${test.skipped}</div><div class="label">${ICONS.skipped} Skipped</div></div>
-                    </div></div>`;
-            };
-
-            const renderHistoryPage = () => {
-                historyList.innerHTML = '';
-                if (testRecords.length <= 1) { historyList.innerHTML = `<div class="no-data"><p>No previous records.</p></div>`; return; }
-                testRecords.slice(1).forEach(test => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `<div class="history-item-header"><span>${test.testName}</span><span class="history-item-score">${test.score}/${test.totalScore}</span></div><div class="history-item-details"><span>Rank: ${test.rank}</span><span class="history-item-date">${new Date(test.id).toLocaleDateString()}</span></div>`;
-                    card.onclick = () => {
-                        const index = testRecords.findIndex(r => r.id === test.id);
-                        const [selectedTest] = testRecords.splice(index, 1);
-                        testRecords.unshift(selectedTest);
-                        saveRecords(); renderAll(); switchView('home-view');
-                    };
-                    historyList.appendChild(card);
-                });
-            };
-
-            const renderAll = () => { renderHomePage(); renderHistoryPage(); };
-
-            // --- EVENT LISTENERS ---
-            addBtn.onclick = () => { testForm.reset(); switchView('add-entry-view'); };
-            cancelBtn.onclick = () => switchView('home-view');
-            historyBtn.onclick = () => document.getElementById('history-view').classList.contains('active') ? switchView('home-view') : switchView('history-view');
-            
-            testForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const correct = parseInt(document.getElementById('correct').value);
-                const incorrect = parseInt(document.getElementById('incorrect').value);
-                if (correct + incorrect > TOTAL_QUESTIONS) {
-                    alert(`Error: Correct (${correct}) and Incorrect (${incorrect}) questions cannot exceed ${TOTAL_QUESTIONS}.`); return;
-                }
-                const newRecord = {
-                    id: Date.now(),
-                    testName: document.getElementById('testName').value,
-                    score: parseFloat(document.getElementById('score').value),
-                    totalScore: parseFloat(document.getElementById('totalScore').value),
-                    rank: parseInt(document.getElementById('rank').value),
-                    totalStudents: parseInt(document.getElementById('totalStudents').value),
-                    percentile: parseFloat(document.getElementById('percentile').value),
-                    accuracy: parseFloat(document.getElementById('accuracy').value),
-                    correct, incorrect,
-                    attempted: correct + incorrect,
-                    skipped: TOTAL_QUESTIONS - (correct + incorrect)
-                };
-                testRecords.unshift(newRecord);
-                saveRecords(); renderAll(); switchView('home-view');
-            });
-
-            // Theme Modal Listeners
-            themeBtn.onclick = () => themeModal.classList.add('active');
-            themeModal.onclick = (e) => { if (e.target === themeModal) themeModal.classList.remove('active'); };
-            
-            // --- INITIALIZATION ---
-            const initialize = () => {
-                // Populate theme modal
-                for (const [key, name] of Object.entries(THEMES)) {
-                    const btn = document.createElement('button');
-                    btn.className = 'theme-button';
-                    btn.style.backgroundImage = `var(--bg-image)`;
-                    btn.dataset.theme = key;
-                    btn.title = name;
-                    btn.onclick = () => { applyTheme(key); themeModal.classList.remove('active'); };
-                    document.body.classList.add(`theme-${key}`); // Temporarily apply class to get CSS var
-                    btn.style.backgroundImage = getComputedStyle(document.body).backgroundImage;
-                    document.body.className = ''; // Clean up
-                    themeOptionsGrid.appendChild(btn);
-                }
-                
-                // Load data and set initial theme/view
-                const savedTheme = localStorage.getItem('appTheme') || 'cosmic-dark';
-                applyTheme(savedTheme);
-                loadRecords();
-                renderAll();
-                switchView('home-view');
-            };
-
-            initialize();
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
