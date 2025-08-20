@@ -1,212 +1,358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyPlanner - Responsive Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>VIP Test Performance Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4361ee; --secondary: #3f37c9; --accent: #4895ef;
-            --light: #f8f9fa; --dark: #212529; --danger: #f72585;
-            --card-header-bg: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
-            --header-animation: none;
+            --shadow-strong: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --shadow-light: 0 4px 12px rgba(0,0,0,0.15);
+            --border-radius: 18px;
+            --transition-main: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --transition-fast: all 0.2s ease-in-out;
         }
-        @keyframes animated-gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-        @keyframes subtle-glow { 0%,100%{box-shadow:0 0 5px 0px var(--primary)} 50%{box-shadow:0 0 15px 3px var(--primary)} }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        /* THEMES */
+        /* Default: Cosmic Dark */
+        body, body.theme-cosmic-dark { --bg-image: linear-gradient(135deg, #100f25 0%, #000 100%); --card-bg: rgba(22, 22, 44, 0.7); --primary-text: #f0f0f0; --secondary-text: #a0a0c0; --accent-1: #9f5afd; --accent-2: #ff4b76; --green: #00f5a0; --red: #ff5e5e; --orange: #ffc84a; --border-color: rgba(159, 90, 253, 0.2); }
+        body.theme-royal-gold { --bg-image: linear-gradient(to right, #141e30, #243b55); --card-bg: rgba(10, 20, 30, 0.6); --primary-text: #e0e0e0; --secondary-text: #b0b0b0; --accent-1: #ffd700; --accent-2: #fbb034; --green: #9acd32; --red: #e74c3c; --orange: #f39c12; --border-color: rgba(255, 215, 0, 0.3); }
+        body.theme-sunset-glow { --bg-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); --card-bg: rgba(255, 255, 255, 0.2); --primary-text: #3f2727; --secondary-text: #7c4c4c; --accent-1: #ff6a00; --accent-2: #ee0979; --green: #1a936f; --red: #c0392b; --orange: #d35400; --border-color: rgba(255, 255, 255, 0.4); }
+        body.theme-deep-ocean { --bg-image: linear-gradient(to top, #09203f 0%, #537895 100%); --card-bg: rgba(10, 30, 60, 0.5); --primary-text: #e0fbfc; --secondary-text: #98c1d9; --accent-1: #3d5a80; --accent-2: #98c1d9; --green: #2a9d8f; --red: #e76f51; --orange: #f4a261; --border-color: rgba(152, 193, 217, 0.3); }
+        body.theme-emerald-shine { --bg-image: linear-gradient(to right, #009245, #FCEE21); --card-bg: rgba(0, 50, 20, 0.3); --primary-text: #fafff2; --secondary-text: #d4f0d6; --accent-1: #FCEE21; --accent-2: #00d465; --green: #adff2f; --red: #ff4500; --orange: #ffa500; --border-color: rgba(252, 238, 33, 0.4); }
+        body.theme-neon-punk { --bg-image: linear-gradient(to bottom, #000, #22002f); --card-bg: rgba(10, 0, 20, 0.6); --primary-text: #fff; --secondary-text: #ccc; --accent-1: #f0f; --accent-2: #0ff; --green: #0f0; --red: #f00; --orange: #ff0; --border-color: rgba(255, 0, 255, 0.4); }
+        body.theme-minimalist-light { --bg-image: linear-gradient(to bottom, #eef2f3, #ffffff); --card-bg: rgba(255, 255, 255, 0.7); --primary-text: #2c3e50; --secondary-text: #7f8c8d; --accent-1: #3498db; --accent-2: #9b59b6; --green: #27ae60; --red: #c0392b; --orange: #f39c12; --border-color: rgba(0,0,0,0.1); }
+        body.theme-lush-forest { --bg-image: linear-gradient(135deg, #2A3F54, #1E2B22); --card-bg: rgba(20, 40, 30, 0.6); --primary-text: #E8F5E9; --secondary-text: #A5D6A7; --accent-1: #66BB6A; --accent-2: #A1887F; --green: #81C784; --red: #EF9A9A; --orange: #FFCC80; --border-color: rgba(102, 187, 106, 0.3); }
+        body.theme-strawberry-cream { --bg-image: linear-gradient(120deg, #f8cdda 0%, #1d2b64 100%); --card-bg: rgba(255, 255, 255, 0.15); --primary-text: #fff; --secondary-text: #f0d9e7; --accent-1: #ff85a2; --accent-2: #ffc4d4; --green: #aaffc3; --red: #ff85a2; --orange: #ffd6a5; --border-color: rgba(255, 255, 255, 0.2); }
+        body.theme-cherry-blossom { --bg-image: linear-gradient(to top, #ffc0cb, #ffc3a0); --card-bg: rgba(255, 255, 255, 0.3); --primary-text: #593d3b; --secondary-text: #8c6b69; --accent-1: #ff758c; --accent-2: #ffb3c1; --green: #4caf50; --red: #d94a64; --orange: #ff8a65; --border-color: rgba(255, 255, 255, 0.4); }
+        /* Add 10 more quick themes */
+        body.theme-moonlit-asteroid { --bg-image: linear-gradient(to right, #0F2027, #203A43, #2C5364); --card-bg: rgba(0,0,0,0.2); --primary-text: #ddd; --secondary-text: #aaa; --accent-1: #757F9A; --accent-2: #D7DDE8; --green: #81C784; --red: #e57373; --orange: #FFB74D; --border-color: rgba(255,255,255,0.1); }
+        body.theme-burning-orange { --bg-image: linear-gradient(45deg, #FF4E50, #F9D423); --card-bg: rgba(255,255,255,0.2); --primary-text: #4C1D06; --secondary-text: #6A3A1F; --accent-1: #d32f2f; --accent-2: #FF6F00; --green: #388e3c; --red: #d32f2f; --orange: #f57c00; --border-color: rgba(255,255,255,0.3); }
+        body.theme-amethyst { --bg-image: linear-gradient(to right, #9d50bb, #6e48aa); --card-bg: rgba(0,0,0,0.2); --primary-text: #f3e5f5; --secondary-text: #ce93d8; --accent-1: #d1c4e9; --accent-2: #ab47bc; --green: #a5d6a7; --red: #ef9a9a; --orange: #ffcc80; --border-color: rgba(255,255,255,0.2); }
+        body.theme-sharp-blues { --bg-image: linear-gradient(to right, #00c6ff, #0072ff); --card-bg: rgba(255,255,255,0.15); --primary-text: #fff; --secondary-text: #e0f7fa; --accent-1: #80d8ff; --accent-2: #40c4ff; --green: #b9f6ca; --red: #ff8a80; --orange: #ffd180; --border-color: rgba(255,255,255,0.3); }
+        body.theme-soft-mint { --bg-image: linear-gradient(to right, #b2fefa, #0ed2f7); --card-bg: rgba(255,255,255,0.3); --primary-text: #004d40; --secondary-text: #00796b; --accent-1: #00bfa5; --accent-2: #1de9b6; --green: #00c853; --red: #dd2c00; --orange: #ff9100; --border-color: rgba(255,255,255,0.4); }
+        body.theme-grapefruit { --bg-image: linear-gradient(120deg, #f3e7e9 0%, #e3eeff 100%); --card-bg: rgba(255,255,255,0.5); --primary-text: #343a40; --secondary-text: #6c757d; --accent-1: #fa709a; --accent-2: #fec0c7; --green: #52b788; --red: #ef476f; --orange: #f79d65; --border-color: rgba(0,0,0,0.1); }
+        body.theme-earth { --bg-image: linear-gradient(to top, #4a453b, #7b715e); --card-bg: rgba(0,0,0,0.15); --primary-text: #f5f5f5; --secondary-text: #d7ccc8; --accent-1: #a1887f; --accent-2: #8d6e63; --green: #aed581; --red: #ffab91; --orange: #ffb74d; --border-color: rgba(255,255,255,0.1); }
+        body.theme-vintage { --bg-image: linear-gradient(to right, #d7d2cc, #304352); --card-bg: rgba(255,255,255,0.1); --primary-text: #fff; --secondary-text: #e0e0e0; --accent-1: #bcaaa4; --accent-2: #a1887f; --green: #a5d6a7; --red: #ef9a9a; --orange: #ffcc80; --border-color: rgba(255,255,255,0.1); }
+        body.theme-rose-water { --bg-image: linear-gradient(to top, #e55d87, #5fc3e4); --card-bg: rgba(255,255,255,0.2); --primary-text: #262c47; --secondary-text: #535c8c; --accent-1: #ff588a; --accent-2: #52a6c5; --green: #59cd90; --red: #e55d87; --orange: #f4a261; --border-color: rgba(255,255,255,0.3); }
+        body.theme-midnight-green { --bg-image: linear-gradient(to right, #00416A, #799F0C, #FFE000); --card-bg: rgba(0,0,0,0.2); --primary-text: #f1f2b5; --secondary-text: #e0e3a4; --accent-1: #d8de43; --accent-2: #a7be1c; --green: #bfff00; --red: #ff4848; --orange: #ffb400; --border-color: rgba(255,255,255,0.2); }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         html { scroll-behavior: smooth; }
-        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 20px; color: var(--dark); }
-        .app-container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); overflow: hidden; }
 
-        .header { background: var(--primary); color: white; padding: 25px; text-align: center; transition: background 0.3s ease; animation: var(--header-animation); background-size: 200% 200%; }
-        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .app-content { display: flex; min-height: 600px; }
-        .sidebar { width: 250px; background: var(--light); padding: 20px; border-right: 1px solid #e9ecef; flex-shrink: 0; }
-        .user-profile { text-align: center; margin-bottom: 30px; }
-        .avatar { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 15px; cursor: pointer; }
-        .user-name { font-weight: 600; font-size: 1.1rem; }
-        .nav-menu { list-style: none; padding: 0; }
-        .nav-item { margin-bottom: 8px; }
-        .nav-item .nav-link { display: flex; align-items: center; padding: 10px 15px; color: var(--dark); text-decoration: none; font-weight: 500; border-radius: 8px; transition: all 0.2s ease; cursor: pointer; }
-        .nav-item .nav-link:hover { background: rgba(67, 97, 238, 0.1); }
-        .nav-item.active .nav-link { background: var(--primary); color: white; }
-        .nav-link i { margin-right: 10px; font-size: 1rem; width: 20px; text-align: center; }
-
-        .main-content { flex-grow: 1; padding: 25px; }
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px; }
-        .dashboard-title { font-size: 1.5rem; font-weight: 600; }
-        .subjects-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .subject-card { background: white; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #e9ecef; display: flex; flex-direction: column; }
-        .subject-header { padding: 15px; background: var(--card-header-bg); color: white; display: flex; align-items: center; text-align: center; background-size: 200% 200%; animation: var(--header-animation); position: relative; }
-        .subject-title-group { flex-grow: 1; }
-        .subject-header h3 { font-size: 1.2rem; margin: 0; font-weight: 600; }
-        .subject-time { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; display: inline-block; margin-top: 5px; }
-        
-        .subject-actions { position: absolute; top: 10px; right: 10px; }
-        .action-menu-btn { background: none; border: none; color: white; cursor: pointer; font-size: 1rem; opacity: 0.8; transition: opacity 0.2s ease; padding: 5px; }
-        .action-menu-btn:hover { opacity: 1; }
-        .actions-menu { display: none; position: absolute; top: 30px; right: 0; background: white; color: var(--dark); border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 10; overflow: hidden; }
-        .actions-menu a { display: block; padding: 10px 15px; text-decoration: none; color: var(--dark); font-size: 0.9rem; white-space: nowrap; }
-        .actions-menu a:hover { background: var(--light); }
-        .actions-menu a i { margin-right: 8px; }
-        .actions-menu .delete-action { color: var(--danger); }
-        
-        .subject-body { padding: 15px; flex: 1; display: flex; flex-direction: column; }
-        .task-list { list-style: none; flex: 1; }
-        .task-item { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f3f5; }
-        .add-task-form { display: none; margin-top: 15px; }
-        .task-input { flex: 1; padding: 8px 12px; border: 1px solid #e9ecef; border-radius: 6px 0 0 6px; font-size: 0.9rem; outline: none; }
-        .add-task-btn { background: var(--primary); color: white; border: none; padding: 0 15px; border-radius: 0 6px 6px 0; cursor: pointer; transition: background 0.2s ease; }
-        .show-add-task-btn { background: none; border: 1px dashed #ccc; color: #6c757d; width: 100%; padding: 8px; margin-top: 15px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
-        
-        .add-subject-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 1.5rem; box-shadow: 0 5px 20px rgba(67, 97, 238, 0.4); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; z-index: 10; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 20; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: white; padding: 25px; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6c757d; }
-        .form-input, input[type="time"] { width: 100%; padding: 10px; border: 1px solid #e9ecef; border-radius: 6px; font-size: 1rem; font-family: 'Poppins', sans-serif; }
-        .time-inputs { display: flex; gap: 15px; align-items: center;}
-        .submit-btn, .setting-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 500; cursor: pointer; width: 100%; margin-top: 10px; transition: background 0.2s ease; text-align: center; }
-        
-        .settings-section { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; }
-        .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; max-height: 250px; overflow-y: auto; padding: 5px; }
-        
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; padding: 10px; }
-        .week-days, .calendar-days { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 5px; }
-        
-        #print-area, #import-file-input, #avatar-upload { display: none; }
-
-        /* --- Responsive Fixes for Mobile --- */
-        @media (max-width: 768px) {
-            body { padding: 0; }
-            .app-container { border-radius: 0; }
-            .app-content { flex-direction: column; }
-            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e9ecef; }
-            .main-content { padding: 15px; }
-            .add-subject-btn { bottom: 20px; right: 20px; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: var(--bg-image);
+            background-attachment: fixed;
+            color: var(--primary-text);
+            transition: var(--transition-fast);
         }
 
-        @media (max-width: 480px) {
-            .header h1 { font-size: 2rem; }
-            .dashboard-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .subjects-container { grid-template-columns: 1fr; }
-            .time-inputs { flex-direction: column; gap: 10px; align-items: stretch; }
-            .modal { padding: 10px; }
-            .modal-content { padding: 20px; }
+        .app-container { max-width: 420px; margin: 0 auto; padding: 15px; padding-top: 80px; padding-bottom: 90px; }
+        .app-header {
+            position: fixed; top: 0; left: 0; right: 0; max-width: 420px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; padding: 15px;
+            background-color: rgba(from var(--card-bg) r g b / 0.7);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            z-index: 100;
         }
+        .app-title { font-size: 20px; font-weight: 600; text-shadow: 0 0 10px var(--accent-1); }
+        .header-actions button {
+            background: none; border: 1px solid var(--border-color); color: var(--primary-text);
+            padding: 6px 12px; border-radius: 20px; cursor: pointer; margin-left: 10px; font-size: 14px;
+            transition: var(--transition-fast);
+        }
+        .header-actions button:hover { background-color: var(--accent-1); color: var(--bg-color); border-color: var(--accent-1); }
         
-        @media print { /* Print styles */ }
+        .view { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            border-radius: var(--border-radius); padding: 20px; margin-bottom: 25px;
+            box-shadow: var(--shadow-strong); border: 1px solid var(--border-color);
+            transition: var(--transition-main);
+            transform-style: preserve-3d;
+        }
+        .card:hover { transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1.05); }
+
+        .header-card { text-align: center; padding: 10px; }
+        .header-card .trophy { font-size: 52px; color: var(--accent-1); text-shadow: 0 0 20px var(--accent-1); animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .header-card h1 { margin: 10px 0 5px; font-weight: 700; background: linear-gradient(45deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-card h1 span { font-size: 40px; }
+        .header-card p { margin: 0; color: var(--secondary-text); font-size: 14px; }
+        .total-students { margin-top: 15px; font-size: 12px; color: var(--secondary-text); background-color: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 20px; display: inline-block; }
+
+        .section-title { text-align: center; font-weight: 600; color: var(--secondary-text); margin-bottom: 20px; font-size: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .quick-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; text-align: center; }
+        .summary-item { background-color: rgba(0,0,0,0.1); padding: 15px; border-radius: 12px; transition: var(--transition-fast); }
+        .summary-item:hover { background-color: rgba(0,0,0,0.2); transform: translateY(-3px); }
+        .summary-item .icon { color: var(--accent-1); margin-bottom: 8px; width: 32px; height: 32px; }
+        .summary-item .value { font-size: 20px; font-weight: 700; }
+        .summary-item .label { font-size: 12px; color: var(--secondary-text); }
+
+        .question-summary { display: flex; justify-content: space-around; text-align: center; padding: 10px 0; }
+        .question-item .value { font-size: 32px; font-weight: 700; line-height: 1.1; }
+        .question-item .label { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 5px; justify-content: center; }
+        .question-item .icon { width: 18px; height: 18px; }
+        .question-item.correct .value { color: var(--green); }
+        .question-item.incorrect .value { color: var(--red); }
+        .question-item.unattempted .value { color: var(--orange); }
+
+        .no-data { text-align: center; padding: 50px 20px; color: var(--secondary-text); background: var(--card-bg); border-radius: var(--border-radius); }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--secondary-text); }
+        .form-group input { width: 100%; padding: 14px; background: rgba(0,0,0,0.15); border: 1px solid var(--border-color); color: var(--primary-text); border-radius: 10px; font-size: 16px; font-family: 'Poppins'; transition: var(--transition-fast); }
+        .form-group input:focus { border-color: var(--accent-1); box-shadow: 0 0 10px var(--accent-1); outline: none; }
+        .form-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .form-actions button { flex-grow: 1; padding: 15px; border: none; border-radius: var(--border-radius); font-size: 16px; font-weight: 600; cursor: pointer; transition: var(--transition-fast); }
+        .form-actions .btn-save { background-image: linear-gradient(45deg, var(--green), var(--accent-1)); color: #fff; }
+        .form-actions .btn-cancel { background-image: linear-gradient(45deg, var(--red), var(--orange)); color: #fff; }
+        .form-actions button:hover { transform: translateY(-3px); box-shadow: var(--shadow-light); }
+
+        .history-list .card { padding: 15px; cursor: pointer; }
+        .history-item-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        .history-item-date { font-size: 12px; color: var(--secondary-text); }
+        .history-item-score { font-size: 18px; color: var(--accent-1); }
+        .history-item-details { display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px; color: var(--secondary-text); }
+
+        .fab {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background-image: linear-gradient(45deg, var(--accent-1), var(--accent-2));
+            color: #fff; border: none; border-radius: 50%; font-size: 36px;
+            line-height: 60px; text-align: center; box-shadow: 0 5px 20px var(--accent-1);
+            cursor: pointer; z-index: 99; transition: var(--transition-main);
+        }
+        .fab:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 8px 25px var(--accent-1); }
+        
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 200;
+        }
+        .modal.active { display: flex; animation: fadeIn 0.3s; }
+        .modal-content {
+            background-color: var(--card-bg); backdrop-filter: blur(10px);
+            padding: 20px; border-radius: var(--border-radius); width: 90%; max-width: 380px;
+            border: 1px solid var(--border-color);
+        }
+        .theme-options {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 10px; margin-top: 15px; max-height: 50vh; overflow-y: auto;
+        }
+        .theme-button {
+            width: 100%; height: 50px; border: 2px solid var(--border-color);
+            border-radius: 10px; cursor: pointer; transition: var(--transition-fast);
+        }
+        .theme-button:hover { transform: scale(1.1); border-color: var(--primary-text); }
     </style>
 </head>
 <body>
+
+    <header class="app-header">
+        <div class="app-title">Tracker</div>
+        <div class="header-actions">
+            <button id="theme-btn">Themes</button>
+            <button id="history-btn">History</button>
+        </div>
+    </header>
+
     <div class="app-container">
-        <header class="header"><h1>StudyPlanner Responsive</h1></header>
-        <div class="app-content">
-            <aside class="sidebar">
-                <div class="user-profile"><img src="" alt="User" class="avatar" title="Click to change photo"><div class="user-name"></div></div>
-                <ul class="nav-menu">
-                    <li class="nav-item active" data-view="dashboard"><a class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item" data-view="schedule"><a class="nav-link"><i class="fas fa-calendar-alt"></i><span>Schedule</span></a></li>
-                    <li class="nav-item"><a class="nav-link" id="print-btn-nav"><i class="fas fa-print"></i><span>Print Plan</span></a></li>
-                    <li class="nav-item"><a class="nav-link" id="settings-btn"><i class="fas fa-cog"></i><span>Settings</span></a></li>
-                </ul>
-            </aside>
-            <main class="main-content">
-                <div id="dashboard-view">
-                    <div class="dashboard-header"><h2 class="dashboard-title">Subjects for: <span id="current-date-display"></span></h2></div>
-                    <div class="subjects-container" id="subjects-container"></div>
+        <div id="home-view" class="view active"></div>
+        <div id="add-entry-view" class="view">
+            <div class="card">
+                <h3 class="section-title">Add New Test Record</h3>
+                <form id="test-form">
+                    <div class="form-group"><label for="testName">Test Name</label><input type="text" id="testName" placeholder="e.g., Full Length Test 1" required></div>
+                    <div class="form-group"><label for="score">Score / Total Score</label><div style="display: flex; gap: 10px;"><input type="number" step="any" id="score" placeholder="141.21" required><input type="number" step="any" id="totalScore" placeholder="200.04" required></div></div>
+                    <div class="form-group"><label for="rank">Rank / Total Students</label><div style="display: flex; gap: 10px;"><input type="number" id="rank" placeholder="446" required><input type="number" id="totalStudents" placeholder="16673" required></div></div>
+                    <div class="form-group"><label for="percentile">Percentile (%)</label><input type="number" step="any" id="percentile" placeholder="97.00" required></div>
+                    <div class="form-group"><label for="accuracy">Accuracy (%)</label><input type="number" step="any" id="accuracy" placeholder="74.17" required></div>
+                    <div class="form-group"><label for="correct">Correct / Incorrect Questions (out of 120)</label><div style="display: flex; gap: 10px;"><input type="number" id="correct" placeholder="89" required><input type="number" id="incorrect" placeholder="13" required></div></div>
+                    <div class="form-actions"><button type="button" class="btn-cancel" id="cancel-btn">Cancel</button><button type="submit" class="btn-save">Save Record</button></div>
+                </form>
+            </div>
+        </div>
+        <div id="history-view" class="view">
+             <h3 class="section-title">Test History</h3><div class="history-list" id="history-list"></div>
+        </div>
+    </div>
+    
+    <button id="add-btn" class="fab">+</button>
+    
+    <div id="theme-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="section-title">Choose a VIP Theme</h3>
+            <div class="theme-options" id="theme-options-grid">
                 </div>
-                <div id="schedule-view" style="display: none;">
-                    <div class="calendar">
-                        <div class="calendar-header"><button id="prev-month" class="calendar-nav">&lt;</button><h3 id="month-year"></h3><button id="next-month" class="calendar-nav">&gt;</button></div>
-                        <div class="week-days"><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></div>
-                        <div class="calendar-days" id="calendar-days"></div>
-                    </div>
-                </div>
-            </main>
         </div>
     </div>
 
-    <button class="add-subject-btn" id="add-subject-btn" title="Add New Subject"><i class="fas fa-plus"></i></button>
-
-    <div class="modal" id="subject-modal">
-        <div class="modal-content"><div class="modal-header"><h3 class="modal-title" id="modal-title"></h3><button class="close-btn">&times;</button></div><form id="subject-form"><input type="hidden" id="subject-id"><div class="form-group"><label for="subject-name">Subject Name</label><input type="text" id="subject-name" class="form-input" required></div><div class="form-group"><label>Time Duration</label><div class="time-inputs"><div><label for="subject-start-time" style="font-size:0.8rem;">Start Time</label><input type="time" id="subject-start-time" required></div><div><label for="subject-end-time" style="font-size:0.8rem;">End Time</label><input type="time" id="subject-end-time" required></div></div></div><button type="submit" class="submit-btn" id="submit-btn"></button></form></div>
-    </div>
-    <div class="modal" id="settings-modal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title">Settings</h3><button class="close-btn">&times;</button></div><div id="settings-content"></div></div></div>
-    <div class="modal" id="print-modal"><div class="modal-content"><div class="modal-header"><h3 class="modal-title">Print Options</h3><button class="close-btn">&times;</button></div><div class="print-options"><button class="submit-btn print-btn" data-mode="selected">Print Selected Date's Plan</button><button class="submit-btn print-btn" data-mode="all">Print Full Schedule</button></div></div></div>
-    
-    <div id="print-area"></div>
-    <input type="file" id="import-file-input" accept=".json">
-    <input type="file" id="avatar-upload" accept="image/*">
-
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // All JavaScript functions and logic from the previous final version
-        // This script is complete and self-contained.
-        // No logic has been removed, only CSS has been adjusted for responsiveness.
-        // The script from the "Final, Stable and Complete Code" is inserted here.
-        let schedule = {};
-        let userProfile = {};
-        let currentDate = new Date();
-        let calendarDate = new Date();
-        const mainContent = document.querySelector('.main-content');
-        const subjectModal = document.getElementById('subject-modal');
-        const settingsModal = document.getElementById('settings-modal');
-        const printModal = document.getElementById('print-modal');
-        const formatDate = date => [date.getFullYear(), (date.getMonth() + 1).toString().padStart(2, '0'), date.getDate().toString().padStart(2, '0')].join('-');
-        const formatTimeForDisplay = (time24) => { if (!time24) return ''; const [hours, minutes] = time24.split(':'); const h = parseInt(hours); const ampm = h >= 12 ? 'PM' : 'AM'; const h12 = h % 12 || 12; return `${h12}:${minutes.padStart(2, '0')} ${ampm}`; };
-        const formatTimeForInput = (time12) => { if (!time12) return ''; const [time, modifier] = time12.split(' '); let [hours, minutes] = time.split(':'); if (hours === '12') hours = '00'; if (modifier === 'PM') hours = parseInt(hours, 10) + 12; return `${hours.toString().padStart(2, '0')}:${minutes}`; };
-        function saveSchedule() { localStorage.setItem('studyPlannerSchedule', JSON.stringify(schedule)); }
-        function loadSchedule() { schedule = JSON.parse(localStorage.getItem('studyPlannerSchedule') || '{}'); }
-        function saveUserProfile() { localStorage.setItem('studyPlannerProfile', JSON.stringify(userProfile)); }
-        function loadUserProfile() { const profile = JSON.parse(localStorage.getItem('studyPlannerProfile')); userProfile = profile || { name: 'Priya Sharma', avatar: 'https://randomuser.me/api/portraits/women/44.jpg' }; document.querySelector('.user-name').textContent = userProfile.name; document.querySelector('.avatar').src = userProfile.avatar; }
-        function handleDailyReset() { const todayStr = formatDate(new Date()); const lastVisitDate = localStorage.getItem('lastVisitDate'); if (lastVisitDate && todayStr > lastVisitDate) { const lastDaySubjects = schedule[lastVisitDate] || []; if (lastDaySubjects.length > 0 && !schedule[todayStr]) { schedule[todayStr] = lastDaySubjects.map(s => ({ ...s, tasks: [] })); saveSchedule(); } } localStorage.setItem('lastVisitDate', todayStr); }
-        const themes = {'Cosmic': { type: 'animated', '--primary': '#2c3e50', '--accent': '#8e44ad', '--card-header-bg': 'linear-gradient(-45deg, #2c3e50, #8e44ad, #2980b9, #3498db)', '--header-animation': 'animated-gradient 15s ease infinite' }, 'Aurora': { type: 'animated', '--primary': '#ff7e5f', '--accent': '#ffc3a0', '--card-header-bg': 'linear-gradient(-45deg, #00c6ff, #0072ff, #f09, #ff7e5f)', '--header-animation': 'animated-gradient 10s ease infinite' }, 'Ocean': { '--primary': '#4361ee', '--accent': '#4895ef' }, 'Sunset': { '--primary': '#f77f00', '--accent': '#fcbf49' }, 'Forest': { '--primary': '#2d6a4f', '--accent': '#52b788' }, 'Mango': { '--primary': '#ffe259', '--accent': '#ffb75e', '--card-header-bg': 'linear-gradient(to right, #ffe259, #ffa751)' }, 'Minty': { '--primary': '#00b09b', '--accent': '#48c9b0', '--card-header-bg': 'linear-gradient(to right, #00b09b, #96c93d)' }, 'Rose': { '--primary': '#e02d67', '--accent': '#f06292' }, 'Royal': { '--primary': '#4a00e0', '--accent': '#8e2de2', '--card-header-bg': 'linear-gradient(to right, #4a00e0, #8e2de2)' }, 'Teal': { '--primary': '#008080', '--accent': '#48D1CC' },};
-        function applyTheme(themeName) { const theme = themes[themeName]; if (!theme) return; let finalTheme = {...theme}; if (!finalTheme['--card-header-bg']) finalTheme['--card-header-bg'] = `linear-gradient(135deg, ${finalTheme['--accent']}, ${finalTheme['--primary']})`; if (!finalTheme['--header-animation']) finalTheme['--header-animation'] = 'none'; Object.entries(finalTheme).forEach(([key, value]) => document.documentElement.style.setProperty(key, value)); localStorage.setItem('studyPlannerTheme', themeName); document.querySelectorAll('.theme-option').forEach(opt => { if(opt) opt.classList.toggle('active', opt.dataset.theme === themeName); }); }
-        function renderSubjects() { const dateStr = formatDate(currentDate); document.getElementById('current-date-display').textContent = currentDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }); const subjectsForDate = schedule[dateStr] || []; const subjectsContainer = document.getElementById('subjects-container'); subjectsContainer.innerHTML = ''; if (subjectsForDate.length === 0) { subjectsContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: #888;">No subjects scheduled. Click the '+' button to add one.</p>`; return; } subjectsForDate.forEach(subject => { const card = document.createElement('div'); card.className = 'subject-card'; card.dataset.id = subject.id; card.innerHTML = `<div class="subject-header"><div class="subject-title-group"><h3>${subject.name}</h3><span class="subject-time">${subject.time}</span></div><div class="subject-actions"><button class="action-menu-btn" title="Actions"><i class="fas fa-ellipsis-v"></i></button><div class="actions-menu"><a href="#" class="edit-action"><i class="fas fa-edit"></i>Edit</a><a href="#" class="delete-action"><i class="fas fa-trash-alt"></i>Delete</a></div></div></div><div class="subject-body"><ul class="task-list">${subject.tasks.map(t => `<li class="task-item" data-task-id="${t.id}"><input type="checkbox" class="task-checkbox" ${t.completed ? 'checked' : ''}><span class="task-label ${t.completed ? 'completed' : ''}">${t.text}</span><button class="delete-task-btn" title="Delete Task"><i class="fas fa-times"></i></button></li>`).join('') || '<p style="text-align:center; color:#888; font-size:0.9rem; padding: 10px 0;">No tasks yet.</p>'}</ul><button class="show-add-task-btn"><i class="fas fa-plus"></i> Add Task</button><form class="add-task-form"><input type="text" class="task-input" placeholder="Add new task..." required><button type="submit" class="add-task-btn" title="Add Task"><i class="fas fa-plus"></i></button></form></div>`; subjectsContainer.appendChild(card); }); }
-        function renderCalendar() { calendarDate.setDate(1); const month = calendarDate.getMonth(), year = calendarDate.getFullYear(); document.getElementById('month-year').textContent = `${calendarDate.toLocaleString('default', { month: 'long' })} ${year}`; const firstDayIndex = calendarDate.getDay(), lastDay = new Date(year, month + 1, 0).getDate(), prevLastDay = new Date(year, month, 0).getDate(); const calendarDaysContainer = document.getElementById('calendar-days'); calendarDaysContainer.innerHTML = ''; for (let i = firstDayIndex; i > 0; i--) calendarDaysContainer.innerHTML += `<div class="calendar-day other-month">${prevLastDay - i + 1}</div>`; for (let i = 1; i <= lastDay; i++) { const dayDate = new Date(year, month, i), dateStr = formatDate(dayDate); calendarDaysContainer.innerHTML += `<div class="calendar-day ${schedule[dateStr] && schedule[dateStr].length > 0 ? 'has-subject' : ''} ${dateStr === formatDate(currentDate) ? 'selected' : ''}" data-date="${dateStr}">${i}</div>`; } }
-        function switchView(viewName) { document.querySelectorAll('.main-content > div').forEach(v => v.style.display = 'none'); document.getElementById(`${viewName}-view`).style.display = 'block'; document.querySelectorAll('.nav-item').forEach(item => item.classList.toggle('active', item.dataset.view === viewName)); if (viewName === 'dashboard') renderSubjects(); if (viewName === 'schedule') renderCalendar(); }
-        function openModal(type, data = null) { const form = document.getElementById('subject-form'); form.reset(); document.getElementById('modal-title').textContent = type === 'edit' ? 'Edit Subject' : 'Add New Subject'; document.getElementById('submit-btn').textContent = type === 'edit' ? 'Save Changes' : 'Add Subject'; document.getElementById('subject-id').value = type === 'edit' ? data.id : ''; if (type === 'edit') { document.getElementById('subject-name').value = data.name; if (data.time && data.time.includes(' - ')) { const [start, end] = data.time.split(' - '); document.getElementById('subject-start-time').value = formatTimeForInput(start); document.getElementById('subject-end-time').value = formatTimeForInput(end); } } subjectModal.style.display = 'flex'; }
-        function openSettingsModal() { document.getElementById('settings-content').innerHTML = `<div class="settings-section"><h4>Profile</h4><div class="form-group"><label for="candidate-name">Your Name</label><input type="text" id="candidate-name" class="form-input" value="${userProfile.name}"></div><button class="setting-btn" id="avatar-upload-btn">Change Profile Photo</button></div><div class="settings-section"><h4>Data Management</h4><button class="setting-btn" id="export-data">Export Data</button><button class="setting-btn" id="import-data">Import Data</button></div><div class="settings-section"><h4>Themes</h4><div class="theme-grid">${Object.keys(themes).map(name => `<div class="theme-option" data-theme="${name}"><div class="theme-name">${name}</div></div>`).join('')}</div></div>`; applyTheme(localStorage.getItem('studyPlannerTheme') || 'Cosmic'); settingsModal.style.display = 'flex'; }
-        function exportData() { const dataStr = JSON.stringify(schedule, null, 2); const blob = new Blob([dataStr], {type: 'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `study-planner-backup-${formatDate(new Date())}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
-        function importData(file) { if(!file) return; if(!confirm('This will overwrite all current data. Are you sure?')) return; const reader = new FileReader(); reader.onload = (event) => { try { const importedSchedule = JSON.parse(event.target.result); schedule = importedSchedule; saveSchedule(); alert('Data imported successfully!'); currentDate = new Date(); switchView('dashboard'); } catch (error) { alert('Error: Invalid or corrupted data file.'); } }; reader.readAsText(file); }
-        function generatePrintContent(mode) { const printArea = document.getElementById('print-area'); let html = `<h1>Study Plan</h1>`; const dataToPrint = (mode === 'selected') ? { [formatDate(currentDate)]: schedule[formatDate(currentDate)] || [] } : schedule; Object.keys(dataToPrint).sort().forEach(dateStr => { const subjects = dataToPrint[dateStr]; if(subjects && subjects.length > 0) { html += `<h2>${new Date(dateStr+'T00:00:00').toLocaleDateString('en-US', {dateStyle: 'full'})}</h2>`; subjects.forEach(subject => { html += `<div class="print-subject-card"><div class="print-subject-header"><span>${subject.name}</span><span>${subject.time}</span></div><ul class="print-task-list">${subject.tasks.map(t => `<li class="print-task-item ${t.completed ? 'completed' : ''}"><span>${t.text}</span></li>`).join('') || '<li>No tasks</li>'}</ul></div>`; }); } }); if(html === `<h1>Study Plan</h1>`) html += `<p>No data to print for the selected range.</p>`; printArea.innerHTML = html; window.print(); }
-        
-        document.querySelector('.nav-menu').addEventListener('click', e => { const navItem = e.target.closest('.nav-item'); if (navItem && navItem.dataset.view) switchView(navItem.dataset.view); });
-        document.getElementById('add-subject-btn').addEventListener('click', () => openModal('add'));
-        document.getElementById('settings-btn').addEventListener('click', openSettingsModal);
-        document.getElementById('print-btn-nav').addEventListener('click', () => printModal.style.display = 'flex');
-        
-        document.getElementById('subject-form').addEventListener('submit', e => { e.preventDefault(); const dateStr = formatDate(currentDate); if (!schedule[dateStr]) schedule[dateStr] = []; const id = parseInt(document.getElementById('subject-id').value); const startTime = document.getElementById('subject-start-time').value; const endTime = document.getElementById('subject-end-time').value; const subjectData = { name: document.getElementById('subject-name').value.trim(), time: `${formatTimeForDisplay(startTime)} - ${formatTimeForDisplay(endTime)}` }; if (id) { Object.assign(schedule[dateStr].find(s => s.id === id), subjectData); } else { schedule[dateStr].push({ id: Date.now(), ...subjectData, tasks: [] }); } saveSchedule(); renderSubjects(); subjectModal.style.display = 'none'; });
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- ELEMENT SELECTORS ---
+            const views = document.querySelectorAll('.view');
+            const homeView = document.getElementById('home-view');
+            const historyList = document.getElementById('history-list');
+            const testForm = document.getElementById('test-form');
+            const themeOptionsGrid = document.getElementById('theme-options-grid');
+            
+            // Buttons
+            const addBtn = document.getElementById('add-btn');
+            const historyBtn = document.getElementById('history-btn');
+            const themeBtn = document.getElementById('theme-btn');
+            const cancelBtn = document.getElementById('cancel-btn');
+            const themeModal = document.getElementById('theme-modal');
 
-        mainContent.addEventListener('click', e => { document.querySelectorAll('.actions-menu').forEach(menu => { if (!menu.parentElement.contains(e.target)) menu.style.display = 'none'; }); const subjectCard = e.target.closest('.subject-card'); if (e.target.closest('.show-add-task-btn')) { const btn = e.target.closest('.show-add-task-btn'); btn.style.display = 'none'; btn.nextElementSibling.style.display = 'flex'; btn.nextElementSibling.querySelector('input').focus(); } if (e.target.closest('.action-menu-btn')) { e.target.closest('.subject-actions').querySelector('.actions-menu').style.display = 'block'; } if (!subjectCard) return; const subjectId = parseInt(subjectCard.dataset.id), dateStr = formatDate(currentDate); const subject = schedule[dateStr].find(s => s.id === subjectId); if (e.target.matches('.edit-action')) openModal('edit', subject); if (e.target.matches('.delete-action')) { if (confirm('Delete this subject?')) { schedule[dateStr] = schedule[dateStr].filter(s => s.id !== subjectId); saveSchedule(); renderSubjects(); } } if (e.target.closest('.delete-task-btn')) { const taskId = parseInt(e.target.closest('.task-item').dataset.taskId); subject.tasks = subject.tasks.filter(t => t.id !== taskId); saveSchedule(); renderSubjects(); } });
-        mainContent.addEventListener('change', e => { if(e.target.matches('.task-checkbox')) { const subjectId = parseInt(e.target.closest('.subject-card').dataset.id); const taskId = parseInt(e.target.closest('.task-item').dataset.taskId); const subject = schedule[formatDate(currentDate)].find(s => s.id === subjectId); const task = subject.tasks.find(t => t.id === taskId); task.completed = e.target.checked; saveSchedule(); renderSubjects(); } });
-        mainContent.addEventListener('submit', e => { if (e.target.classList.contains('add-task-form')) { e.preventDefault(); const input = e.target.querySelector('.task-input'); const subjectId = parseInt(e.target.closest('.subject-card').dataset.id); const subject = schedule[formatDate(currentDate)].find(s => s.id === subjectId); if (input.value.trim() && subject) { subject.tasks.push({ id: Date.now(), text: input.value.trim(), completed: false }); saveSchedule(); renderSubjects(); } } });
+            // --- STATE & CONSTANTS ---
+            let testRecords = [];
+            const TOTAL_QUESTIONS = 120;
+            const THEMES = {
+                'cosmic-dark': 'Cosmic Dark', 'royal-gold': 'Royal Gold', 'sunset-glow': 'Sunset Glow',
+                'deep-ocean': 'Deep Ocean', 'emerald-shine': 'Emerald Shine', 'neon-punk': 'Neon Punk',
+                'minimalist-light': 'Minimalist Light', 'lush-forest': 'Lush Forest', 'strawberry-cream': 'Strawberry Cream',
+                'cherry-blossom': 'Cherry Blossom', 'moonlit-asteroid': 'Moonlit Asteroid', 'burning-orange': 'Burning Orange',
+                'amethyst': 'Amethyst', 'sharp-blues': 'Sharp Blues', 'soft-mint': 'Soft Mint',
+                'grapefruit': 'Grapefruit', 'earth': 'Earth', 'vintage': 'Vintage',
+                'rose-water': 'Rose Water', 'midnight-green': 'Midnight Green'
+            };
 
-        document.getElementById('calendar-days').addEventListener('click', e => { if (e.target.classList.contains('calendar-day') && e.target.dataset.date) { const dateParts = e.target.dataset.date.split('-'); currentDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]); switchView('dashboard'); } });
-        document.getElementById('prev-month').addEventListener('click', () => { calendarDate.setMonth(calendarDate.getMonth() - 1); renderCalendar(); });
-        document.getElementById('next-month').addEventListener('click', () => { calendarDate.setMonth(calendarDate.getMonth() + 1); renderCalendar(); });
-        
-        document.body.addEventListener('click', e => { if (e.target.matches('.close-btn')) e.target.closest('.modal').style.display = 'none'; if (e.target.matches('.modal')) e.target.style.display = 'none'; });
-        
-        settingsModal.addEventListener('click', e => { if (e.target.closest('.theme-option')) applyTheme(e.target.closest('.theme-option').dataset.theme); if (e.target.id === 'export-data') exportData(); if (e.target.id === 'import-data') document.getElementById('import-file-input').click(); if (e.target.id === 'avatar-upload-btn' || e.target.closest('.avatar')) document.getElementById('avatar-upload').click(); });
-        settingsModal.addEventListener('change', e => { if(e.target.id === 'candidate-name') { userProfile.name = e.target.value; saveUserProfile(); loadUserProfile(); } });
-        document.getElementById('avatar-upload').addEventListener('change', e => { if(e.target.files[0]) { const reader = new FileReader(); reader.onload = (event) => { userProfile.avatar = event.target.result; saveUserProfile(); loadUserProfile(); }; reader.readAsDataURL(e.target.files[0]); } });
-        document.getElementById('import-file-input').addEventListener('change', e => importData(e.target.files[0]));
-        printModal.addEventListener('click', e => { if (e.target.matches('.print-btn')) generatePrintContent(e.target.dataset.mode); });
+            // SVG Icons
+            const ICONS = {
+                rank: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.18 8.44L2 9.5l5.5 5.07L6.35 22L12 18.27L17.65 22L16.5 14.57L22 9.5l-7.18-.06z"></path></svg>`,
+                percentile: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>`,
+                accuracy: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm-1.06 14.47l-3.54-3.54 1.42-1.41 2.12 2.12 4.6-4.6 1.41 1.42-6.01 6.01z"></path></svg>`,
+                attempted: `<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.26 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"></path></svg>`,
+                correct: `<svg class="icon" fill="var(--green)" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg>`,
+                incorrect: `<svg class="icon" fill="var(--red)" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>`,
+                skipped: `<svg class="icon" fill="var(--orange)" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"></path></svg>`
+            };
+            
+            // --- DATA & THEME MANAGEMENT ---
+            const loadRecords = () => testRecords = JSON.parse(localStorage.getItem('testRecords')) || [];
+            const saveRecords = () => localStorage.setItem('testRecords', JSON.stringify(testRecords));
+            const applyTheme = (theme) => { document.body.className = `theme-${theme}`; localStorage.setItem('appTheme', theme); };
 
-        loadUserProfile();
-        loadSchedule();
-        handleDailyReset();
-        applyTheme(localStorage.getItem('studyPlannerTheme') || 'Cosmic');
-        switchView('dashboard');
-    });
+            // --- VIEW MANAGEMENT ---
+            const switchView = (viewId) => {
+                views.forEach(v => v.classList.remove('active'));
+                document.getElementById(viewId).classList.add('active');
+                historyBtn.textContent = viewId === 'history-view' ? 'Home' : 'History';
+            };
+
+            // --- RENDERING ---
+            const renderHomePage = () => {
+                if (testRecords.length === 0) {
+                    homeView.innerHTML = `<div class="no-data"><h2>No records found!</h2><p>Click the '+' button to add your first test record.</p></div>`; return;
+                }
+                const test = testRecords[0];
+                homeView.innerHTML = `
+                    <div class="card header-card">
+                        <div class="trophy">🏆</div> <p>${test.testName}</p>
+                        <h1><span>${test.score}</span> / ${test.totalScore}</h1>
+                        <p>Performance on ${new Date(test.id).toLocaleDateString()}</p>
+                        <div class="total-students">Total Students: ${test.totalStudents}</div>
+                    </div>
+                    <div class="card"><h3 class="section-title">Quick Summary</h3><div class="quick-summary-grid">
+                        <div class="summary-item">${ICONS.rank}<div class="value">${test.rank}</div><div class="label">Rank</div></div>
+                        <div class="summary-item">${ICONS.percentile}<div class="value">${test.percentile}%</div><div class="label">Percentile</div></div>
+                        <div class="summary-item">${ICONS.accuracy}<div class="value">${test.accuracy}%</div><div class="label">Accuracy</div></div>
+                        <div class="summary-item">${ICONS.attempted}<div class="value">${test.attempted}/${TOTAL_QUESTIONS}</div><div class="label">Attempted</div></div>
+                    </div></div>
+                    <div class="card"><h3 class="section-title">Question Summary</h3><div class="question-summary">
+                        <div class="question-item correct"><div class="value">${test.correct}</div><div class="label">${ICONS.correct} Correct</div></div>
+                        <div class="question-item incorrect"><div class="value">${test.incorrect}</div><div class="label">${ICONS.incorrect} Incorrect</div></div>
+                        <div class="question-item unattempted"><div class="value">${test.skipped}</div><div class="label">${ICONS.skipped} Skipped</div></div>
+                    </div></div>`;
+            };
+
+            const renderHistoryPage = () => {
+                historyList.innerHTML = '';
+                if (testRecords.length <= 1) { historyList.innerHTML = `<div class="no-data"><p>No previous records.</p></div>`; return; }
+                testRecords.slice(1).forEach(test => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `<div class="history-item-header"><span>${test.testName}</span><span class="history-item-score">${test.score}/${test.totalScore}</span></div><div class="history-item-details"><span>Rank: ${test.rank}</span><span class="history-item-date">${new Date(test.id).toLocaleDateString()}</span></div>`;
+                    card.onclick = () => {
+                        const index = testRecords.findIndex(r => r.id === test.id);
+                        const [selectedTest] = testRecords.splice(index, 1);
+                        testRecords.unshift(selectedTest);
+                        saveRecords(); renderAll(); switchView('home-view');
+                    };
+                    historyList.appendChild(card);
+                });
+            };
+
+            const renderAll = () => { renderHomePage(); renderHistoryPage(); };
+
+            // --- EVENT LISTENERS ---
+            addBtn.onclick = () => { testForm.reset(); switchView('add-entry-view'); };
+            cancelBtn.onclick = () => switchView('home-view');
+            historyBtn.onclick = () => document.getElementById('history-view').classList.contains('active') ? switchView('home-view') : switchView('history-view');
+            
+            testForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const correct = parseInt(document.getElementById('correct').value);
+                const incorrect = parseInt(document.getElementById('incorrect').value);
+                if (correct + incorrect > TOTAL_QUESTIONS) {
+                    alert(`Error: Correct (${correct}) and Incorrect (${incorrect}) questions cannot exceed ${TOTAL_QUESTIONS}.`); return;
+                }
+                const newRecord = {
+                    id: Date.now(),
+                    testName: document.getElementById('testName').value,
+                    score: parseFloat(document.getElementById('score').value),
+                    totalScore: parseFloat(document.getElementById('totalScore').value),
+                    rank: parseInt(document.getElementById('rank').value),
+                    totalStudents: parseInt(document.getElementById('totalStudents').value),
+                    percentile: parseFloat(document.getElementById('percentile').value),
+                    accuracy: parseFloat(document.getElementById('accuracy').value),
+                    correct, incorrect,
+                    attempted: correct + incorrect,
+                    skipped: TOTAL_QUESTIONS - (correct + incorrect)
+                };
+                testRecords.unshift(newRecord);
+                saveRecords(); renderAll(); switchView('home-view');
+            });
+
+            // Theme Modal Listeners
+            themeBtn.onclick = () => themeModal.classList.add('active');
+            themeModal.onclick = (e) => { if (e.target === themeModal) themeModal.classList.remove('active'); };
+            
+            // --- INITIALIZATION ---
+            const initialize = () => {
+                // Populate theme modal
+                for (const [key, name] of Object.entries(THEMES)) {
+                    const btn = document.createElement('button');
+                    btn.className = 'theme-button';
+                    btn.style.backgroundImage = `var(--bg-image)`;
+                    btn.dataset.theme = key;
+                    btn.title = name;
+                    btn.onclick = () => { applyTheme(key); themeModal.classList.remove('active'); };
+                    document.body.classList.add(`theme-${key}`); // Temporarily apply class to get CSS var
+                    btn.style.backgroundImage = getComputedStyle(document.body).backgroundImage;
+                    document.body.className = ''; // Clean up
+                    themeOptionsGrid.appendChild(btn);
+                }
+                
+                // Load data and set initial theme/view
+                const savedTheme = localStorage.getItem('appTheme') || 'cosmic-dark';
+                applyTheme(savedTheme);
+                loadRecords();
+                renderAll();
+                switchView('home-view');
+            };
+
+            initialize();
+        });
     </script>
+
 </body>
 </html>
